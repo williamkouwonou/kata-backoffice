@@ -1,0 +1,82 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<databaseChangeLog xmlns="http://www.liquibase.org/xml/ns/dbchangelog" xmlns:ext="http://www.liquibase.org/xml/ns/dbchangelog-ext" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog-ext http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-ext.xsd http://www.liquibase.org/xml/ns/dbchangelog http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-3.5.xsd">
+
+    <changeSet author="William" id="000001">
+        <createTable tableName="clients">
+            <column name="client_id" type="VARCHAR(40)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="first_name" type="VARCHAR(100)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="last_name" type="VARCHAR(100)">
+                <constraints nullable="false"/>
+            </column>
+        </createTable>
+    </changeSet>
+    <changeSet author="William" id="000002">
+        <createTable tableName="accounts">
+            <column name="account_id" type="VARCHAR(40)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="client_id" type="VARCHAR(40)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="account_number" type="VARCHAR(16)">
+                <constraints nullable="false"/>
+            </column>
+        </createTable>
+    </changeSet>
+    <changeSet author="William" id="000003">
+        <createTable tableName="transactions">
+            <column name="transaction_id" type="VARCHAR(40)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="account_id" type="VARCHAR(40)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="amount" type="numeric(13, 2))">
+                <constraints nullable="false"/>
+            </column>
+            <column name="transaction_date" type="TIMESTAMP(6) WITHOUT TIME ZONE">
+                <constraints nullable="false"/>
+            </column>
+            <column name="transaction_type" type="VARCHAR(1)">
+                <constraints nullable="false"/>
+            </column>
+
+        </createTable>
+    </changeSet>
+   
+    <changeSet author="William" id="000004">
+        <addPrimaryKey columnNames="client_id" constraintName="clients_pki" tableName="clients"/>
+    </changeSet>
+    <changeSet author="William" id="000005">
+        <addPrimaryKey columnNames="account_id" constraintName="accounts_pki" tableName="accounts"/>
+    </changeSet>
+    <changeSet author="William" id="000006">
+        <addPrimaryKey columnNames="transaction_id" constraintName="transactions_pki" tableName="transactions"/>
+    </changeSet>
+    
+ 
+    <changeSet author="william" id="000007">
+        <addForeignKeyConstraint 
+            baseColumnNames="client_id" 
+            baseTableName="accounts" 
+            constraintName="account_client_id_fki" 
+            referencedColumnNames="client_id" 
+            referencedTableName="clients"
+        />
+    </changeSet>
+    <changeSet author="william" id="000008">
+        <addForeignKeyConstraint 
+            baseColumnNames="account_id" 
+            baseTableName="transactions" 
+            constraintName="transactions_account_id_fki" 
+            referencedColumnNames="account_id" 
+            referencedTableName="accounts"
+        />
+    </changeSet>
+    
+    
+</databaseChangeLog>
